@@ -1,0 +1,3 @@
+displayName = BetelgueseLib
+author = localMisanthrope
+version = 0.1

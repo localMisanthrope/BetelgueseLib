@@ -1,0 +1,20 @@
+BETELGEUSE LIB
+(Bee-tuhl-joos)
+(Or "Beetlejuice")
+
+Betelgeuse is an experimental re-implementation of MoeLib that breaks reliance on needing pre-made ModX classes with primary constructors for entities.
+
+With Betelgeuse, concepts of components and data remain the same, however all entities are handled with a "container" of data structs.
+Each struct pertains to a component, which gets enabled with the subsequent data.
+
+All entities are instanced from JSON, with components being made to be versatile and all-encompassing.
+
+Like MoeLib, Betelgeuse also implements automatic JSON deserialization and instantiation for ease of use.
+
+ENTITIES AND COMPONENTS
+Betelgeuse follows an "entity-component" styled architecture, meaning entites are containers for components which contain data.
+Components and their subsequent "actors" act upon each component within the container and the data attached.
+
+JSON INSTANTIATION
+Betelgeuse allows modders to instantiate items from deserialized JSON files.
+Documentation of best practices for implementation are on the GitHub wiki.

@@ -1,0 +1,13 @@
+BetelgeuseLibConfig: {
+	DisplayName: BetelgeuseLib Config
+
+	LoadExampleContent: {
+		Label: Load Example Content
+		Tooltip: Loads content provided for testing purposes. This should normally be false.
+	}
+
+	DeveloperMode: {
+		Label: Developer Mode
+		Tooltip: Enables debugging information in the console.
+	}
+}
