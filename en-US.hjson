@@ -1,0 +1,8 @@
+Mods: {
+	BetelgueseLib: {
+		Keybinds: {
+			"Spawn Item Test.DisplayName": Spawn  Item  Test
+			"Spawn Item.DisplayName": Spawn  Item
+		}
+	}
+}

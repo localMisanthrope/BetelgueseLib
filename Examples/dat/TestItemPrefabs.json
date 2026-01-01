@@ -1,0 +1,51 @@
+[
+  {
+    "PrefabName": "TestItemAPrefabA",
+    "EntityName": "BetelgueseLib/TestItemA",
+    "Tags": [ "IsTestingItem" ],
+    "Components": [
+      {
+        "$type": "TestComponentA",
+        "ModName": "BetelgueseLib",
+        "GlobalName": "TestComponentGlobal",
+        "DataA": 10,
+        "DataB": "Working"
+      }
+    ]
+  },
+  {
+    "PrefabName": "TestItemAPrefabB",
+    "EntityName": "BetelgueseLib/TestItemA",
+    "Tags": [ "IsTestingItem" ],
+    "Components": [
+      {
+        "$type": "TestComponentA",
+        "ModName": "BetelgueseLib",
+        "GlobalName": "TestComponentGlobal",
+        "DataA": 20,
+        "DataB": "Still Working"
+      }
+    ]
+  },
+  {
+    "PrefabName": "TestItemBPrefabA",
+    "EntityName": "BetelgueseLib/TestItemB",
+    "Tags": [ "IsWorkingItem", "IsTestingItem" ],
+    "Components": [
+      {
+        "$type": "TestComponentA",
+        "ModName": "BetelgueseLib",
+        "GlobalName": "TestComponentGlobal",
+        "DataA": 10,
+        "DataB": "Working"
+      },
+      {
+        "$type": "TestComponentB",
+        "ModName": "BetelgueseLib",
+        "GlobalName": "OtherTestComponentGlobal",
+        "DataA": 2.0,
+        "DataB": "Hello, World!"
+      }
+    ]
+  }
+]

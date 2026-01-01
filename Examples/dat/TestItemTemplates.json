@@ -1,0 +1,14 @@
+[
+  {
+    "TemplateName": "TestItemA",
+    "TexturePath": "BetelgueseLib/res/texture/testA"
+  },
+  {
+    "TemplateName": "TestItemB",
+    "TexturePath": "BetelgueseLib/res/texture/testB"
+  },
+  {
+    "TemplateName": "TestItemC",
+    "TexturePath": "BetelgueseLib/res/texture/testC"
+  }
+]

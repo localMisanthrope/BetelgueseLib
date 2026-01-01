@@ -4,11 +4,11 @@ using Terraria.ModLoader.Config;
 
 namespace BetelgueseLib;
 
-public class BetelgeuseLibConfig : ModConfig
+public class BetelgueseLibConfig : ModConfig
 {
     public override ConfigScope Mode => ConfigScope.ClientSide;
 
-    public static BetelgeuseLibConfig Instance => ModContent.GetInstance<BetelgeuseLibConfig>();
+    public static BetelgueseLibConfig Instance => ModContent.GetInstance<BetelgueseLibConfig>();
 
     [DefaultValue(false)]
     public bool LoadExampleContent { get; set; }

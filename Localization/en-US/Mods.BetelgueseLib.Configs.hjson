@@ -1,0 +1,13 @@
+BetelgueseLibConfig: {
+	DisplayName: Betelguese Lib Config
+
+	LoadExampleContent: {
+		Label: Load Example Content
+		Tooltip: Enables the loading of example/test content.
+	}
+
+	DeveloperMode: {
+		Label: Developer Mode
+		Tooltip: Enables developer mode; provides useful debugging information.
+	}
+}

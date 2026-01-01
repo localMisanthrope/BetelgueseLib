@@ -11,10 +11,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Folder Include="Examples\dat\" />
-	  <Folder Include="Examples\Items\" />
-	  <Folder Include="Examples\Projectiles\" />
-	  <Folder Include="Examples\NPCs\" />
-	  <Folder Include="Localization\en-US\" />
 	</ItemGroup>
 
 	<!-- References -->

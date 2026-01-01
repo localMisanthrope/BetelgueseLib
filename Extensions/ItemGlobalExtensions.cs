@@ -1,80 +1,87 @@
 ﻿using BetelgueseLib.Core;
-using BetelgueseLib.Registries;
 using Terraria;
 
 namespace BetelgueseLib.Extensions;
 
 public static class ItemGlobalExtensions
 {
-    public static bool TrySubscribeToComponent<C, D>(this Item item, D componentData)
-        where C : ItemGlobal
-        where D : IComponentData
+    /// <summary>
+    /// Locates the Item's <see cref="ItemGlobal"/> instance by its name.
+    /// <br></br> Do not use during the loading process, as <see cref="Item.EntityGlobals"/> is not populated at that time!
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="globalName"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    public static bool TryFindItemGlobal(this Item item, string globalName, out ItemGlobal result)
     {
-        if (!ItemGlobalsRegistry.TryGetGlobal(typeof(C).Name, out ItemGlobal global))
+        foreach (var global in item.EntityGlobals)
         {
-            //GlobalNotFound warn.
+            if (global.Name != globalName)
+                continue;
+
+            if (global is ItemGlobal itemGlobal)
+            {
+                result = itemGlobal;
+                return true;
+            }
+        }
+
+        //ComponentNotFound warn.
+        result = null;
+        return false;
+    }
+
+    public static bool TryEnableGlobal<D>(this Item item, D data)
+        where D : IComponent
+    {
+        if (!item.TryFindItemGlobal(data.GlobalName, out var result))
+            return false;
+
+        result.Data = data;
+        result.OnEnabled(item);
+        //DebugComponentEnabled message.
+        return true;
+    }
+
+    public static bool TryEnableGlobal<C, D>(this Item item, D data)
+        where C : ItemGlobal
+        where D : IComponent
+    {
+        if (!item.TryGetGlobalItem(out C global))
+        {
+            //ComponentNotFound warn.
             return false;
         }
 
-        if (!(global as ItemComponentGlobal<D>).TrySubscribe(item, componentData))
-        {
-            //FailedToInstantiate warn.
-            return false;
-        }
+        global.Data = data;
         global.OnEnabled(item);
+        //DebugComponentEnabled message.
         return true;
     }
 
-    public static bool IsSubcribedToComponent<C, D>(this Item item) 
+    public static bool IsGlobalEnabled<C>(this Item item)
         where C : ItemGlobal
-        where D : IComponentData
-        => ItemGlobalsRegistry.TryGetGlobal(typeof(C).Name, out var global) && (global as ItemComponentGlobal<D>).Enabled(item);
+        => item.TryGetGlobalItem(out C global) && global.Enabled;
 
-    public static bool UnsubscribeFromComponent<C, D>(this Item item)
+    public static bool TryDisableGlobal<C>(this Item item)
         where C : ItemGlobal
-        where D : IComponentData
     {
-        if (!ItemGlobalsRegistry.TryGetGlobal(typeof(C).Name, out ItemGlobal global))
+        if (!item.TryGetGlobalItem(out C global))
         {
-            //GlobalNotFound warn.
+            //ComponentNotFound warn.
             return false;
         }
 
-        if (!(global as ItemComponentGlobal<D>).TryUnsubscribe(item))
+        if (!global.Enabled)
         {
-            //FailedToInstantiate warn.
+            //ComponentAlreadyDisabled warn.
             return false;
         }
+
+        global.Data = null;
         global.OnDisabled(item);
-        return true;
-    }
-
-    public static bool TrySubscribeToTag(this Item item, string tagName)
-    {
-        if (!ItemGlobalsRegistry.TryGetTagGlobal(tagName, out var global))
-        {
-            //TagNotFound warn.
-            return false;
-        }
-
-        global.Subscribe(item);
-        global.OnEnabled(item);
-        return true;
-    }
-
-    public static bool IsSubscribedToTag(this Item item, string tagName) 
-        => ItemGlobalsRegistry.TryGetTagGlobal(tagName, out var global) && global.Enabled(item);
-
-    public static bool TryUnsubscribeToTag(this Item item, string tagName)
-    {
-        if (!ItemGlobalsRegistry.TryGetTagGlobal(tagName, out var global))
-        {
-            //TagNotFound warn.
-            return false;
-        }
-
-        global.Unsubscribe(item);
-        global.OnDisabled(item);
+        //DebugComponentDisabled message.
         return true;
     }
 }

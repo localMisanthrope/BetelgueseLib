@@ -1,0 +1,16 @@
+TestItems: {
+	TestItemA: {
+		DisplayName: Test Item A
+		Tooltip: This is a testing item.
+	}
+
+	TestItemB: {
+		DisplayName: Test Item B
+		Tooltip: This is also a testing item.
+	}
+
+	TestItemC: {
+		DisplayName: Test Item C
+		Tooltip: Noticing a pattern?
+	}
+}
