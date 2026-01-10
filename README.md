@@ -1,1 +1,30 @@
 # BetelgueseLib
+
+Betelgeuse is an experimental re-implementation of MoeLib that breaks reliance on components being instanced per-entity.
+
+Betelgeuse rethinks the process of instantiation by creating template instances, with the spawned entities being fabricated from prefabs.
+
+## ECG: ENTITY-COMPONENT-GLOBAL
+Betelgeuse splits components and globals, creating a "subscriber-based" system in its place.
+Entities can subscribe to specialized Globals using individualized Components. Once subscribed, these Components are stored, iterated over, saved, and loaded automatically.
+ComponentGlobals are not instanced per entity, and opt to save their subscriber dictionary, allowing components to persist past leaving the world.
+
+## TAGS
+Betelgeuse also introduces entity tags, which enable Entities to subscribe to descriptive tags that can alter their functionality.
+
+## PREFABS
+Betegeuse employs prefabs for each entity type, allowing you to spawn template instances to your own specifications.
+Prefabs are loaded from the DataPath specified in the template instance. Once loaded, prefabs can be used anywhere from their registry.
+
+## TILE COMPONENTS
+All tiles are able to have components which can affect their functionality.
+Tile Components function similarly to an ECF, where data and logic are paired into one object.
+Tile Components can save and load their own individual data, should the need arise.
+Tile Components can be used to circumvent the need for multiple Tile Entities on one tile.
+
+## JSON SUPPORT
+Like MoeLib, Betelgeuse supports and encourages the usage of Json files to achieve content loading.
+All template instances and prefabs are read manually through these files, with various helper functions to give wider support.
+
+## VARIOUS HELPFUL FUNCTIONS
+Betelgeuse offers a variety of helper functions and extensions; you can find a list on Betelgeuse's GitHub wiki.

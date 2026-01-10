@@ -1,2 +1,10 @@
-GlobalNotFound: Failed to locate Global "{0}"; Missing, or incorrect name!
-FinishedLoadingEntities: Finished entity loading for {0}; Took {1} ms.
+Debug: {
+	GlobalEnabled: Global "{0}" enabled on Entity "{1}".
+	PrefabRegistered: Successfully registered Prefab "{0}" under entity "{1}".
+	TagEnabled: Tag "{0}" enabled on Entity "{1}".
+}
+
+Warn: {
+	GlobalNotFound: Failed to locate Global "{0}"; Missing, or incorrect name!
+	TagNotFound: Failed to locate Tag "{0}"; Missing, or incorrect name!
+}

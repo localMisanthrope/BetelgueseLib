@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BetelgueseLib.Core;
 

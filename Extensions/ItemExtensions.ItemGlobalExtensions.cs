@@ -3,7 +3,7 @@ using Terraria;
 
 namespace BetelgueseLib.Extensions;
 
-public static class ItemGlobalExtensions
+public static partial class ItemExtensions
 {
     /// <summary>
     /// Locates the Item's <see cref="ItemGlobal"/> instance by its name.

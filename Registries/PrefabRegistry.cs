@@ -26,9 +26,13 @@ public sealed class PrefabRegistry : ILoadable
             _reg.Add(prefab.EntityName, []);
 
         if (_reg[prefab.EntityName].Contains(prefab))
+        {
+            //PrefabDuplicate warn.
             return false;
+        }
 
         _reg[prefab.EntityName].Add(prefab);
+        //DebugAddedPrefab message.
         return true;
     }
 
@@ -43,12 +47,14 @@ public sealed class PrefabRegistry : ILoadable
     {
         if (!_reg.TryGetValue(entityName, out var list))
         {
+            //EntityNotRegisteredForPrefab warn.
             prefab = default;
             return false;
         }
 
         if (!list.Any(x => x.PrefabName == prefabName))
         {
+            //PrefabNotFoundOnEntity warn.
             prefab = default;
             return false;
         }

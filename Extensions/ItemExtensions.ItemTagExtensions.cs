@@ -1,11 +1,25 @@
 ﻿using BetelgueseLib.Core;
+using System;
 using System.Collections.Generic;
 using Terraria;
 
 namespace BetelgueseLib.Extensions;
 
-public static class ItemTagExtensions
+public static partial class ItemExtensions
 {
+    public static bool TryFindTag<T>(this Item item, out T itemTag)
+        where T : ItemTag
+    {
+        if (!item.TryGetGlobalItem(out T result))
+        {
+            itemTag = null;
+            return false; 
+        }
+
+        itemTag = result;
+        return true;
+    }
+
     public static bool TryFindTag(this Item item, string tagName, out ItemTag? result)
     {
         foreach (var global in item.EntityGlobals)
@@ -33,7 +47,24 @@ public static class ItemTagExtensions
         return true;
     }
 
-    public static string[] GetTags(this Item item)
+    public static bool TryEnableTag<T>(this Item item, Action<T> init = null)
+        where T : ItemTag
+    {
+        if (!item.TryFindTag(out T tag))
+            return false;
+
+        tag.TagEnabled = true;
+        init?.Invoke(tag);
+        return true;
+    }
+
+    public static void BatchEnableTags(this Item item, string[] tags)
+    {
+        foreach (var tag in tags)
+            item.TryEnableTag(tag);
+    }
+
+    public static string[] GetItemTags(this Item item)
     {
         List<string> list = null;
 

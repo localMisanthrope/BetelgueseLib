@@ -10,6 +10,7 @@ public class BetelgueseLibConfig : ModConfig
 
     public static BetelgueseLibConfig Instance => ModContent.GetInstance<BetelgueseLibConfig>();
 
+    [ReloadRequired]
     [DefaultValue(false)]
     public bool LoadExampleContent { get; set; }
 
