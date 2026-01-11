@@ -1,6 +1,12 @@
-﻿namespace BetelgueseLib.Core;
+﻿using Terraria.ModLoader.IO;
 
-public interface IComponent
+namespace BetelgueseLib.Core;
+
+/// <summary>
+/// The base instance for all components.
+/// <br></br> All components must implement proper saving and loading for their data.
+/// </summary>
+public interface IComponent : TagSerializable
 {
     /// <summary>
     /// The internal name of the Component.
@@ -16,4 +22,6 @@ public interface IComponent
     /// The name of the <see cref="ItemGlobal"/> that utilizes this Component.
     /// </summary>
     string GlobalName { get; }
+
+    IComponent Copy();
 }

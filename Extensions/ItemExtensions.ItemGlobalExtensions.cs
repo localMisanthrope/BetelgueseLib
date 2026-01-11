@@ -17,6 +17,9 @@ public static partial class ItemExtensions
     {
         foreach (var global in item.EntityGlobals)
         {
+            if (global is null)
+                continue;
+
             if (global.Name != globalName)
                 continue;
 
@@ -27,7 +30,7 @@ public static partial class ItemExtensions
             }
         }
 
-        //ComponentNotFound warn.
+        BetelgueseLib.Instance.Log(MessageType.Warn, "GlobalNotFound", globalName);
         result = null;
         return false;
     }
@@ -50,7 +53,7 @@ public static partial class ItemExtensions
     {
         if (!item.TryGetGlobalItem(out C global))
         {
-            //ComponentNotFound warn.
+            BetelgueseLib.Instance.Log(MessageType.Warn, "GlobalNotFound", typeof(C).Name);
             return false;
         }
 
@@ -69,7 +72,7 @@ public static partial class ItemExtensions
     {
         if (!item.TryGetGlobalItem(out C global))
         {
-            //ComponentNotFound warn.
+            BetelgueseLib.Instance.Log(MessageType.Warn, "GlobalNotFound", typeof(C).Name);
             return false;
         }
 

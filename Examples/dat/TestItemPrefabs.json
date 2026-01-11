@@ -24,6 +24,12 @@
         "GlobalName": "TestComponentGlobal",
         "DataA": 20,
         "DataB": "Still Working"
+      },
+      {
+        "$type": "KillCounterComponent",
+        "ModName": "BetelgueseLib",
+        "GlobalName": "KillCounterGlobal",
+        "KillCount": 4
       }
     ]
   },
@@ -43,7 +49,7 @@
         "$type": "TestComponentB",
         "ModName": "BetelgueseLib",
         "GlobalName": "OtherTestComponentGlobal",
-        "DataA": 2.0,
+        "DataA": 2.7,
         "DataB": "Hello, World!"
       }
     ]

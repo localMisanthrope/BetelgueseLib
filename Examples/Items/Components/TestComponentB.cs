@@ -1,4 +1,5 @@
 ﻿using BetelgueseLib.Core;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -6,30 +7,30 @@ using Terraria.ModLoader.IO;
 
 namespace BetelgueseLib.Examples.Items.Components;
 
-public struct TestComponentB(string modName, string globalName, float dataA, string dataB) : IComponent
+public struct TestComponentB(string ModName, string GlobalName, float DataA, string DataB) : IComponent
 {
-    public string ModName { get; set; } = modName;
+    public static readonly Func<TagCompound, TestComponentB> DESERIALIZER = Load;
 
-    public string GlobalName { get; set; } = globalName;
+    public string ModName { get; set; } = ModName;
 
-    public float DataA { get; set; } = dataA;
+    public string GlobalName { get; set; } = GlobalName;
 
-    public string DataB { get; set; } = dataB;
-}
+    public float DataA { get; set; } = DataA;
 
-public sealed class TestComponentBSerializer : TagSerializer<TestComponentB, TagCompound>
-{
-    public override TestComponentB Deserialize(TagCompound tag)
-        => new(tag.GetString("ModName"), tag.GetString("GlobalName"), tag.GetFloat(nameof(TestComponentB.DataA)), tag.GetString(nameof(TestComponentB.DataB)));
+    public string DataB { get; set; } = DataB;
 
-    public override TagCompound Serialize(TestComponentB value)
-        => new()
-        {
-            ["ModName"] = value.ModName,
-            ["GlobalName"] = value.GlobalName,
-            [nameof(TestComponentB.DataA)] = value.DataA,
-            [nameof(TestComponentB.DataB)] = value.DataB
-        };
+    public readonly TagCompound SerializeData() => new()
+    {
+        [nameof(ModName)] = ModName,
+        [nameof(GlobalName)] = GlobalName,
+        [nameof(DataA)] = DataA,
+        [nameof(DataB)] = DataB
+    };
+
+    public static TestComponentB Load(TagCompound tag)
+        => new(tag.GetString(nameof(ModName)), tag.GetString(nameof(GlobalName)), tag.GetFloat(nameof(DataA)), tag.GetString(nameof(DataB)));
+
+    public readonly IComponent Copy() => new TestComponentB(ModName, GlobalName, DataA, DataB);
 }
 
 public class OtherTestComponentGlobal : ItemComponentGlobal<TestComponentB>
@@ -42,7 +43,5 @@ public class OtherTestComponentGlobal : ItemComponentGlobal<TestComponentB>
         base.ModifyTooltips(item, tooltips);
         tooltips.Add(new(Mod, "DataALine", $"Component DataA is: {ComponentData.DataA}."));
         tooltips.Add(new(Mod, "DataBLine", $"Component DataB is: {ComponentData.DataB}."));
-
-        
     }
 }

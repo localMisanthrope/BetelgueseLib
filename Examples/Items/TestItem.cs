@@ -28,7 +28,7 @@ public sealed class TestItem(EntityTemplate itemTemplate) : ModItem
 
     protected override bool CloneNewInstances => true;
 
-    public override string LocalizationCategory => "TestItems";
+    public override string LocalizationCategory => "Items.TestItems";
 
     public override string Name => itemTemplate.TemplateName;
 

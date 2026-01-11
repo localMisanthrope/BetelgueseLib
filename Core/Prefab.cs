@@ -5,6 +5,10 @@ using Terraria.ModLoader;
 
 namespace BetelgueseLib.Core;
 
+/// <summary>
+/// A prefab is a pre-constructed variation of an Entity, which sets data when spawned.
+/// <br></br>You can instantiate these by making a Json file or by manually making instances in code.
+/// </summary>
 public struct Prefab
 {    
     /// <summary>

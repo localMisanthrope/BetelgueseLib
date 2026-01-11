@@ -1,4 +1,5 @@
 ﻿using BetelgueseLib.Core;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -6,34 +7,36 @@ using Terraria.ModLoader.IO;
 
 namespace BetelgueseLib.Examples.Items.Components;
 
-public struct TestComponentA(string modName, string globalName, int dataA, string dataB) : IComponent
+public struct TestComponentA(string ModName, string GlobalName, int DataA, string DataB) : IComponent
 {
-    public string ModName { get; set; } = modName;
+    public static readonly Func<TagCompound, TestComponentA> DESERIALIZER = Load;
 
-    public string GlobalName { get; set; } = globalName;
+    public string ModName { get; set; } = ModName;
 
-    public int DataA { get; set; } = dataA;
+    public string GlobalName { get; set; } = GlobalName;
 
-    public string DataB { get; set; } = dataB;
-}
+    public int DataA { get; set; } = DataA;
 
-public sealed class TestComponentASerializer : TagSerializer<TestComponentA, TagCompound>
-{
-    public override TestComponentA Deserialize(TagCompound tag)
-        => new(tag.GetString("ModName"), tag.GetString("GlobalName"), tag.GetInt(nameof(TestComponentA.DataA)), tag.GetString(nameof(TestComponentA.DataB)));
+    public string DataB { get; set; } = DataB;
 
-    public override TagCompound Serialize(TestComponentA value)
-        => new()
-        {
-            ["ModName"] = value.ModName,
-            ["GlobalName"] = value.GlobalName,
-            [nameof(TestComponentA.DataA)] = value.DataA,
-            [nameof(TestComponentA.DataB)] = value.DataB
-        };
+    public readonly TagCompound SerializeData() => new()
+    {
+        [nameof(ModName)] = ModName,
+        [nameof(GlobalName)] = GlobalName,
+        [nameof(DataA)] = DataA,
+        [nameof(DataB)] = DataB
+    };
+
+    public static TestComponentA Load(TagCompound tag)
+        => new(tag.GetString(nameof(ModName)), tag.GetString(nameof(GlobalName)), tag.GetInt(nameof(DataA)), tag.GetString(nameof(DataB)));
+
+    public readonly IComponent Copy() => new TestComponentA(ModName, GlobalName, DataA, DataB);
 }
 
 public class TestComponentGlobal : ItemComponentGlobal<TestComponentA>
 {
+    public int timer = 0;
+
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
     {
         if (!Enabled)
@@ -42,5 +45,22 @@ public class TestComponentGlobal : ItemComponentGlobal<TestComponentA>
         base.ModifyTooltips(item, tooltips);
         tooltips.Add(new(Mod, "DataALine", $"Component DataA is: {ComponentData.DataA}."));
         tooltips.Add(new(Mod, "DataBLine", $"Component DataB is: {ComponentData.DataB}."));
+    }
+
+    public override void UpdateInventory(Item item, Player player)
+    {
+        if (!Enabled)
+            return;
+
+        timer++;
+
+        if (timer >= 180)
+        {
+            ModifyData(delegate(ref TestComponentA dat) { dat.DataA++; });
+
+            timer = 0;
+        }
+
+        base.UpdateInventory(item, player);
     }
 }

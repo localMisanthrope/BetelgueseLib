@@ -8,6 +8,13 @@ using Terraria.ModLoader;
 
 namespace BetelgueseLib;
 
+public enum MessageType
+{
+    Info,
+    Warn,
+    Error
+}
+
 public class BetelgueseLib : Mod
 {
     public static BetelgueseLib Instance => ModContent.GetInstance<BetelgueseLib>();
@@ -22,6 +29,23 @@ public class BetelgueseLib : Mod
     public BetelgueseLib()
     {
         MonoModHooks.Add(typeof(Mod).GetMethod(nameof(Load), System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public), On_Load);
+    }
+
+    public void Log(MessageType messageType, string messageName, params object[] args)
+    {
+        string message = GetLocalization($"Messages.{messageType}.{messageName}").Format(args);
+        switch (messageType)
+        {
+            case MessageType.Info:
+                Logger.Info(message);
+                break;
+            case MessageType.Warn:
+                Logger.Warn(message);
+                break;
+            case MessageType.Error:
+                Logger.Error(message);
+                break;
+        }
     }
 
     private static void On_Load(orig_Load load, Mod self)
